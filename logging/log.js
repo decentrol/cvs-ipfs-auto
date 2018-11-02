@@ -20,7 +20,7 @@ if(mm<10) {
 }
 today = dd + '-' + mm + '-' + yyyy;
 
-let cont = fs.readFileSync('kaas_'+today+'.cvs');
+let cont = fs.readFileSync('Temp_'+today+'.cvs');
 
   cont = new Buffer(cont);
   ipfs.add(cont, function (err, hash) {
