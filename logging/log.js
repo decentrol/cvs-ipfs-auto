@@ -2,7 +2,7 @@ const fs = require("fs");
 
 let ipfs = require('ipfs-api')({host: "localhost", port: 5001, protocol: "http"}); //require ipfs-api which can be installed using npm command line.
 
-
+ 
 setInterval(function(){
 
 //run this piece of code every 24 hours 
