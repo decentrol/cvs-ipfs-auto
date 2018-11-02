@@ -21,7 +21,7 @@ if(mm<10) {
 }
 today = dd + '-' + mm + '-' + yyyy;
 
-let cont = fs.readFileSync('Temp_'+today+'.cvs'); //the name of the cvs file that we want to push out to the ipfs network
+let cont = fs.readFileSync('temp_'+today+'.cvs'); //the name of the cvs file that we want to push out to the ipfs network
  
     
   cont = new Buffer(cont);
