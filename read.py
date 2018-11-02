@@ -6,7 +6,7 @@ import sys
 
 GPIO.setmode(GPIO.BCM) #setmode to BCM
 
-
+ 
 GPIO.setup(17, GPIO.OUT)# Set relay pins as output
 while True: #run it without any stop
     humidity, temperature = Adafruit_DHT.read_retry(Adafruit_DHT.DHT22, 4) # set up temperature and humidity source from gpio pin 4 or pin number 7
