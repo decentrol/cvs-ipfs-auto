@@ -20,7 +20,7 @@ while True: #run it without any stop
     data = [temperature, humidity, timeC, date] #data is an array of temperature, humidity, the time when it's logged and the date.
 
 
-    with open('loggings/temp_{}.csv'.format(date), "a")as output: #create a csv file in the loggings folder of which the name is temp_today's date.
+    with open('logging/temp_{}.csv'.format(date), "a")as output: #create a csv file in the loggings folder of which the name is temp_today's date.
         writer = csv.writer(output, delimiter=",", lineterminator = '\n') #basic cvs library stuff
         writer.writerow(data) #write data in every row
 
