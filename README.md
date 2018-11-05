@@ -14,5 +14,17 @@
   
 <br/>
 
-<H2>Setting stuff up</H2>
-
+<H2>Files to place in the right directory</H2>
+You'll find that I have two .service files: log.service and read.service. These will make sure that the read.py and log.js will run no matter what. Even after a reboot, these files will run without you having to do anything. To make sure you these files will make your app run edit a few lines. You will find that I have put comments in the files for the stuff you have to edit. 
+<br/>
+After you have edited these lines, copy them to the right directory by typing in the terminal:
+<code>$ sudo cp read.service /lib/systemd/system</code>
+<br/> and
+<code>$ sudo cp log.service /lib/systemd/system</code>
+<br/> 
+After that type in the terminal:
+<code>$ sudo systemctl daemon-reload</code>
+<code>$ sudo systemctl enable log</code>
+<code>$ sudo systemctl start read</code>
+<code>$ sudo systemctl status log</code>
+<code>$ sudo systemctl status read</code>
