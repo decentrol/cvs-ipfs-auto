@@ -13,8 +13,10 @@
   </ul>
   
 <br/>
+</p>
 
 <H2>Files to place in the right directory</H2>
+<p>
 You'll find that I have two .service files: log.service and read.service. These will make sure that the read.py and log.js will run no matter what. Even after a reboot, these files will run without you having to do anything. To make sure you these files will make your app run edit a few lines. You will find that I have put comments in the files for the stuff you have to edit. 
 <br/>
 <br/>
@@ -36,3 +38,6 @@ After that type in the terminal:<br/>
 <br/>
 Potentially the read.py and log.js are not running properly or maybe you have an error. In that case <code>$ sudo reboot </code> and if the error didn't go away, try to fix it by the details given in the log in the console. 
 <br/>
+</p>
+<h2>Future</h2>
+<p>I will make a youtube video to see everything working. Furthermore, I am trying to get VeChain blockchain implemented and get some more options for the file safing.</p>
