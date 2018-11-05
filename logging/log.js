@@ -1,24 +1,30 @@
-const fs = require("fs");
+const http = require('http');
 
-let ipfs = require('ipfs-api')({host: "localhost", port: 5001, protocol: "http"});
+const hostname = '0.0.0.0'; // listen on all port
+const port = process.env.NODE_PORT || 3000;
+const env = process.env;
+const fs = require("fs");
+let ipfs = require('ipfs-api')({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' });
+var csvWriter = require('csv-write-stream')
+var writer = csvWriter()
 
 
 tDate = new Date();
 tDate.setHours(23);
 tDate.setMinutes(59);
-tDate.setSeconds(00);
+tDate.setSeconds(59);
 tDate.setMilliseconds(500);
 
 tMillis = tDate - new Date();
 
 if (tMillis < 0)
-  tMillis = tMillis + 24 * 60 * 60 * 1000; // if time is greater than 21:36:00:500 just add 24 hours as it will execute next day
+tMillis = tMillis + 24 * 60 * 60 * 1000; // if time is greater than 21:36:00:500 just add 24 hours as it will execute next day
+
+
+
 
 setTimeout(function(){
- 
-
 setInterval(function(){
-
 
 var today = new Date();
 var dd = today.getDate();
@@ -32,17 +38,17 @@ if(dd<10) {
 if(mm<10) {
     mm = '0'+mm
 }
-today = dd + '-' + mm + '-' + yyyy;
+today = dd + '-' + mm + '-' + yyyy; //define today's date
 
-let cont = fs.readFileSync('loggings/temp_'+today+'.csv');
+writer.pipe(fs.createWriteStream('hash_'+today+'.csv')) //here is where the hash will go
 
-  cont = new Buffer(cont);
-  ipfs.add(cont, function (err, hash) {
+let cont = fs.readFileSync('temp_'+today+'.csv'); //Get the log data file
+
+  cont = new Buffer(cont); //convert the log data file (defined as cont) to a buffer
+  ipfs.add(cont, function (err, ipfsHash) {
     if(err) throw err;
-    console.log(hash);
-
+    writer.write({ipfsHash:ipfsHash[0].hash}) //here was the problem, and this is how I fixed it :)
+    writer.end()
   });
-
-},  24 * 60 * 60 * 1000); //run script every 24 hours 
-
-}, tMillis); //run script at 23:59:00
+}, 24 * 60 * 60 * 1000); //24 hour loop
+}, tMillis); // start on 23:59 hrs
