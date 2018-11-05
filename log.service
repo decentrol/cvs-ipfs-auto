@@ -1,0 +1,13 @@
+[Unit]
+Description=log.js Example Server
+After=network.target
+
+[Service]
+WorkingDirectory=/home/pi/path/to/directory/cvs-ipfs-auto/logs #change this to the path where your 'logs' folder is saved
+ExecStart=/usr/bin/npm start
+Restart=on-failure
+User=pi
+Environment=PORT=8000
+
+[Install]
+WantedBy=multi-user.target
