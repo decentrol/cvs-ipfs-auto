@@ -1,18 +1,13 @@
-const http = require('http');
 
-const hostname = '0.0.0.0'; // listen on all port
-const port = process.env.NODE_PORT || 3000;
-const env = process.env;
 const fs = require("fs");
 let ipfs = require('ipfs-api')({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' });
 var csvWriter = require('csv-write-stream')
 var writer = csvWriter()
 
-
 tDate = new Date();
 tDate.setHours(23);
 tDate.setMinutes(59);
-tDate.setSeconds(59);
+tDate.setSeconds(00);
 tDate.setMilliseconds(500);
 
 tMillis = tDate - new Date();
@@ -25,6 +20,7 @@ tMillis = tMillis + 24 * 60 * 60 * 1000; // if time is greater than 21:36:00:500
 
 setTimeout(function(){
 setInterval(function(){
+
 
 var today = new Date();
 var dd = today.getDate();
@@ -48,7 +44,20 @@ let cont = fs.readFileSync('temp_'+today+'.csv'); //Get the log data file
   ipfs.add(cont, function (err, ipfsHash) {
     if(err) throw err;
     writer.write({ipfsHash:ipfsHash[0].hash}) //here was the problem, and this is how I fixed it :)
-    writer.end()
+
+
+    ipfs.pin.add(ipfsHash[0].hash, function(err){ //pin adding that stuff 
+      if (err) throw err;
+      console.log('success')
+
+    } );
+
   });
+
+
+
+
 }, 24 * 60 * 60 * 1000); //24 hour loop
 }, tMillis); // start on 23:59 hrs
+
+
