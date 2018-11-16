@@ -9,28 +9,24 @@ var Accounts = require('web3-eth-accounts');
 
 
 
-
 web3.eth.accounts.wallet.add({
-    privateKey: '0x455571852e8156eb093e9f541e35b5a6077acd85289b04b863735df106f99716',
-    address: '0xa8e4FC2333cCabA7A6D591fc99b27be7D89E0a75'
+    privateKey: 'your from private key',
+    address: 'your from address'
 });
 
 tDate = new Date();
-tDate.setHours(18);
-tDate.setMinutes(02);
-tDate.setSeconds(20);
-tDate.setMilliseconds(500);
+tDate.setHours(23);
+tDate.setMinutes(55);
+tDate.setSeconds(00);
+tDate.setMilliseconds(00);
 
 tMillis = tDate - new Date();
 
 if (tMillis < 0)
 tMillis = tMillis + 24 * 60 * 60 * 1000; // if time is greater than 21:36:00:500 just add 24 hours as it will execute next day
 
+setTimeout(function everyDay(){
 
-
-//setTimeout(function(){
-  //setInterval(function(){
-//web3.eth.accounts.privateKeyToAccount(0x22936069064cb70984a41d4c1fc71058ce2e7fd4c178fc4cdc260c59d4ac1add);
 var today = new Date();
 var dd = today.getDate();
 var mm = today.getMonth()+1; //January is 0!
@@ -52,31 +48,34 @@ let cont = fs.readFileSync('temp_'+today+'.csv'); //Get the log data file
   cont = new Buffer(cont); //convert the log data file (defined as cont) to a buffer
   ipfs.add(cont, function (err, ipfsHash) {
     if(err) throw err;
-    writer.write({ipfsHash:ipfsHash[0].hash}) //here was the problem, and this is how I fixed it :)
-
 
    	 ipfs.pin.add(ipfsHash[0].hash, function(err){ //pin adding that stuff
      		 if (err) throw err;
      		 console.log('success')
 
    	 });
+     //here was the problem, and this is how I fixed it :)
 
      web3.eth.sendTransaction({
-        from: "0xa8e4FC2333cCabA7A6D591fc99b27be7D89E0a75",
-        to: "0x5484A0373709CfdE968670666e2A7370B32DdadF",
+        from: "your from address",
+        to: "your to address",
         value: "0",
         data: '0x' + Buffer.from(ipfsHash[0].hash,'ascii').toString('hex')
-        },(error, result) =>{
+      },(error, transactionHash) =>{
             if(error){
                 console.error(error);
             }
             else{
-              console.log(result);
+              console.log(transactionHash);
+              writer.write({ipfsHash: ipfsHash[0].hash, transactionHash}) //store the ipfs hash and txID in a csv file 
             }
+
         });
+
+
+
+        setTimeout(everyDay, 24 * 60 * 60 * 1000); //repeat every 24 hours
 
   });
 
-
-//}, 60 * 1000); //24 hour loop
-//}, tMillis); // start on 23:59 hrs
+}, tMillis); // start on 23:55 hrs
