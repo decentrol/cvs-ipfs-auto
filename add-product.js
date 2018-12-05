@@ -7,8 +7,8 @@ const web3 = thorify(new Web3(), "http://127.0.0.1:8669");
 var Accounts = require('web3-eth-accounts');
 
 web3.eth.accounts.wallet.add({
-    privateKey: '0x455571852e8156eb093e9f541e35b5a6077acd85289b04b863735df106f99716',
-    address: '0xa8e4FC2333cCabA7A6D591fc99b27be7D89E0a75'
+    privateKey: 'private',
+    address: 'address'
 });
 
 function guid() {
@@ -51,8 +51,8 @@ jsonfile.writeFile(file, obj, function (err) {
      //here was the problem, and this is how I fixed it :)
 
      web3.eth.sendTransaction({
-        from: "0xa8e4FC2333cCabA7A6D591fc99b27be7D89E0a75",
-        to: "0x5484A0373709CfdE968670666e2A7370B32DdadF",
+        from: "your-address",
+        to: "an address",
         value: "0",
         data: '0x' + Buffer.from(ipfsHash[0].hash,'ascii').toString('hex')
       },(error, transactionHash) =>{
