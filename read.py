@@ -14,13 +14,13 @@ while True: #run it without any stop
       print 'Temperature = {0:0.1f}*C  Humidity = {1:0.1f}%'.format(temperature, humidity)
     else:
       print 'can not connect to the sensor!'
-
+    
     timeC = time.strftime("%I")+':' +time.strftime("%M")+':'+time.strftime("%S") #using the time library define the time. You can find what the percentage stuff means on the python time library docs
     date = time.strftime("%d")+'-' + time.strftime("%m")+'-'+time.strftime("%Y")
-    data = [temperature, humidity, timeC, date] #data is an array of temperature, humidity, the time when it's logged and the date.
+    data = [date, timeC, '{0:0.1f}'.format(temperature, humidity), '{1:0.1f}'.format(temperature, humidity)] #data is an array of temperature, humidity, the time when it's logged and the date.
 
 
-    with open('logging/temp_{}.csv'.format(date), "a")as output: #create a csv file in the loggings folder of which the name is temp_today's date.
+    with open('/path/to/logs/temp_{}.csv'.format(date), "a")as output: #create a csv file in the loggings folder of which the name is temp_today's date.
         writer = csv.writer(output, delimiter=",", lineterminator = '\n') #basic cvs library stuff
         writer.writerow(data) #write data in every row
 
@@ -30,7 +30,7 @@ while True: #run it without any stop
     if temperature <= 22:
         # Turn all relays OFF
         print('Temp too low, heater turns on')
-        GPIO.output(17, GPIO.LOW)
+        GPIO.output(17, GPIO.LOW) #it should be HIGH to turn on but somehow my relay sees HIGH as off and LOW as on
 
     elif temperature >= 28:
         print('Temp too high, heater turns off')
@@ -38,6 +38,6 @@ while True: #run it without any stop
 
     else:
         print('Temp is in between 22 and 28, so you good')
-        time.sleep(900)# if the temp is not below 22 or above 28, update script every 15 minutes
+        time.sleep(60)# if the temp is not below 22 or above 28, update script every 1 minute
 
-    time.sleep(1800) #after the heaters are turned off or on, the script is updated after 30 minutes
+    time.sleep(120) #after the heaters are turned off or on, the script is updated after 2 minutes
