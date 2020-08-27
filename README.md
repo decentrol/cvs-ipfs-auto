@@ -1,5 +1,9 @@
 # cvs-ipfs-auto
 
+## Abandoned
+This project has been abondoned and didn't do much, but it is one of my first dev project, so pretty cool. Whoever is visiting this now: yes I did get blockchain implemented, easy peasy
+
+
 <H2>Introduction</H2>
 <p> I have made the basic set up for a dapp to store datafiles, such as csv, on the blockchain (although at this point blockchain is not implemented yet). The data that I am adding in this project is temperature from my DHT22 and I will be controlling the data from my Raspberry Pi. You need a couple of stuff set up: <br/>
   <br/>
